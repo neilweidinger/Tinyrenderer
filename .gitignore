@@ -1,5 +1,5 @@
-.o
-.out
-.dylib
+*.o
+*.out
+*.dylib
 .DS_Store
 .Trashes
