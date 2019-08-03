@@ -1,4 +1,3 @@
-#include <iostream>  // for debugging, DELETE
 #include <array>
 #include <algorithm>
 #include <fstream>
@@ -18,8 +17,7 @@ void Raytracer::render() {
         }
     }
 
-    std::ofstream ofs {};
-    ofs.open("./pic.ppm", std::ostream::binary);
+    std::ofstream ofs {"./pic.ppm", std::ostream::binary};
     ofs << "P6\n" << Raytracer::width << " " << Raytracer::height << "\n" << 255 << "\n";
 
     for (int i = 0; i < frame_buffer.size(); i++) {
