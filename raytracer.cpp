@@ -20,6 +20,10 @@ void Raytracer::render() {
         }
     }
 
+    writeToFile();
+}
+
+void Raytracer::writeToFile() const {
     std::ofstream ofs {"./pic.ppm", std::ostream::binary};
     ofs << "P6\n" << width_ << " " << height_ << "\n" << 255 << "\n";
 

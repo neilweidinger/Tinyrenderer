@@ -14,6 +14,7 @@ class Raytracer {
     private:
         const int width_;
         const int height_;
+        void writeToFile() const;
         std::vector<geometry::Vector> frame_buffer_;
 };
 
