@@ -1,27 +1,30 @@
-#include <array>
-#include <algorithm>
 #include <fstream>
 #include "raytracer.hpp"
-#include "geometry.hpp"
 
 namespace raytracer {
 
-void Raytracer::render() {
-    std::array<geometry::Vector, Raytracer::height * Raytracer::width> frame_buffer;
+Raytracer::Raytracer(const int& width, const int& height)
+  : width_ {width},
+    height_ {height},
+    frame_buffer_ {} {
+        frame_buffer_.reserve(width_ * height_);
+    }
 
-    for (int i = 0; i < Raytracer::height; i++) {
-        for (int j = 0; j < Raytracer::width; j++) {
-            frame_buffer[(i * width) + j] = geometry::Vector {scaleTo256Bits(i / static_cast<float>(Raytracer::height)),
-                                                              0,
-                                                              scaleTo256Bits(j / static_cast<float>(Raytracer::width))};
+void Raytracer::render() {
+    for (int i = 0; i < height_; i++) {
+        for (int j = 0; j < width_; j++) {
+            frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j),
+                                 geometry::Vector {scaleTo256Bits(i / static_cast<float>(height_)),
+                                 0,
+                                 scaleTo256Bits(j / static_cast<float>(width_))});
         }
     }
 
     std::ofstream ofs {"./pic.ppm", std::ostream::binary};
-    ofs << "P6\n" << Raytracer::width << " " << Raytracer::height << "\n" << 255 << "\n";
+    ofs << "P6\n" << width_ << " " << height_ << "\n" << 255 << "\n";
 
-    for (int i = 0; i < frame_buffer.size(); i++) {
-        ofs << frame_buffer[i];
+    for (int i = 0; i < frame_buffer_.size(); i++) {
+        ofs << frame_buffer_[i];
     }
 
     ofs.close();
@@ -34,6 +37,6 @@ uint8_t scaleTo256Bits(float f) {
 }  // namespace raytracer
 
 int main(int argc, char* argv[]) {
-    raytracer::Raytracer rt {};
+    raytracer::Raytracer rt {1000, 1000};
     rt.render();
 }

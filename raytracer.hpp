@@ -1,15 +1,20 @@
 #ifndef RAYTRACER_HPP
 #define RAYTRACER_HPP
 
+#include <vector>
+#include "geometry.hpp"
+
 namespace raytracer {
 
 class Raytracer {
     public:
+        Raytracer(const int& width, const int& height);
         void render();
 
     private:
-        static constexpr int width = 1000;
-        static constexpr int height = 1000;
+        const int width_;
+        const int height_;
+        std::vector<geometry::Vector> frame_buffer_;
 };
 
 uint8_t scaleTo256Bits(float f);
