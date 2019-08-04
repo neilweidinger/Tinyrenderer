@@ -8,9 +8,12 @@ namespace geometry {
 class Vector {
     public:
         Vector(uint8_t r, uint8_t g, uint8_t b);
-        int dotProduct(Vector vec);
-        Vector scalarMultiply(int scalar);
-        friend std::ostream& operator<<(std::ostream& os, Vector vec);
+        int dotProduct(const Vector& vec) const;
+        void scalarMultiply(int scalar);
+        Vector scalarMultiply(int scalar) const;
+        Vector& operator+=(const Vector& rhs);
+        Vector& operator-=(const Vector& rhs);
+        friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 
     private:
         uint8_t r_val_;
@@ -18,10 +21,14 @@ class Vector {
         uint8_t b_val_;
 };
 
+double length(const Vector& vec);
+Vector operator+(Vector lhs, const Vector& rhs);
+Vector operator-(Vector lhs, const Vector& rhs);
+
 class Sphere {
     public:
         Sphere(Vector center, int radius);
-        bool intersectsWithRay(Vector ray);
+        bool intersectsWithRay(const Vector& ray);
 
     private:
         Vector center_;
