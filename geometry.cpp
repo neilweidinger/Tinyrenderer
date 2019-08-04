@@ -5,42 +5,42 @@ namespace geometry {
 
 // ---------- VECTOR CLASS ----------
 
-Vector::Vector(uint8_t r, uint8_t g, uint8_t b)
-  : r_val_ {r},
-    g_val_ {g},
-    b_val_ {b}
+Vector::Vector(uint8_t x, uint8_t y, uint8_t z)
+  : x_val_ {x},
+    y_val_ {y},
+    z_val_ {z}
 {}
 
 int Vector::dotProduct(const Vector& Vec) const {
-    return this->r_val_ * Vec.r_val_ +
-           this->g_val_ * Vec.g_val_ +
-           this->b_val_ * Vec.b_val_;
+    return this->x_val_ * Vec.x_val_ +
+           this->y_val_ * Vec.y_val_ +
+           this->z_val_ * Vec.z_val_;
 }
 
 // destructively scalar multiples a vector
 void Vector::scalarMultiply(int scalar) {
-    r_val_ *= scalar;
-    g_val_ *= scalar;
-    b_val_ *= scalar;
+    x_val_ *= scalar;
+    y_val_ *= scalar;
+    z_val_ *= scalar;
 }
 
 // non-destructively scalar multiplies a vector, returning a new copy
 Vector Vector::scalarMultiply(int scalar) const {
-    return Vector(r_val_ * scalar, g_val_ * scalar, b_val_ * scalar);
+    return Vector(x_val_ * scalar, y_val_ * scalar, z_val_ * scalar);
 }
 
 Vector& Vector::operator+=(const Vector& rhs) {
-    r_val_ += rhs.r_val_;
-    g_val_ += rhs.g_val_;
-    b_val_ += rhs.b_val_;
+    x_val_ += rhs.x_val_;
+    y_val_ += rhs.y_val_;
+    z_val_ += rhs.z_val_;
 
     return *this;
 }
 
 Vector& Vector::operator-=(const Vector& rhs) {
-    r_val_ -= rhs.r_val_;
-    g_val_ -= rhs.g_val_;
-    b_val_ -= rhs.b_val_;
+    x_val_ -= rhs.x_val_;
+    y_val_ -= rhs.y_val_;
+    z_val_ -= rhs.z_val_;
 
     return *this;
 }
@@ -62,7 +62,7 @@ Vector operator-(Vector lhs, const Vector& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Vector& vec) {
-    return os << vec.r_val_ << vec.g_val_ << vec.b_val_;
+    return os << vec.x_val_ << vec.y_val_ << vec.z_val_;
 }
 
 // ---------- SPHERE CLASS ----------

@@ -7,7 +7,7 @@ namespace geometry {
 
 class Vector {
     public:
-        Vector(uint8_t r, uint8_t g, uint8_t b);
+        Vector(uint8_t x, uint8_t y, uint8_t z);
         int dotProduct(const Vector& vec) const;
         void scalarMultiply(int scalar);
         Vector scalarMultiply(int scalar) const;
@@ -16,9 +16,9 @@ class Vector {
         friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 
     private:
-        uint8_t r_val_;
-        uint8_t g_val_;
-        uint8_t b_val_;
+        uint8_t x_val_;
+        uint8_t y_val_;
+        uint8_t z_val_;
 };
 
 double length(const Vector& vec);

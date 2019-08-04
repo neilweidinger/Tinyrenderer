@@ -16,7 +16,7 @@ class Raytracer {
         const int height_;
         const int fov_;
         void writeToFile() const;
-        std::vector<geometry::Vector> frame_buffer_;
+        std::vector<geometry::Vector> frame_buffer_;  // represents a vector of rgb vectors
 };
 
 uint8_t scaleTo256Bits(float f);
