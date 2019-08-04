@@ -7,14 +7,25 @@ namespace geometry {
 
 class Vector {
     public:
-        Vector();
         Vector(uint8_t r, uint8_t g, uint8_t b);
-        friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+        int dotProduct(Vector vec);
+        Vector scalarMultiply(int scalar);
+        friend std::ostream& operator<<(std::ostream& os, Vector vec);
 
     private:
         uint8_t r_val_;
         uint8_t g_val_;
         uint8_t b_val_;
+};
+
+class Sphere {
+    public:
+        Sphere(Vector center, int radius);
+        bool intersectsWithRay(Vector ray);
+
+    private:
+        Vector center_;
+        int radius_;
 };
 
 }  // namespace geometry

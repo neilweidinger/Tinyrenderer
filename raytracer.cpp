@@ -3,12 +3,12 @@
 
 namespace raytracer {
 
-Raytracer::Raytracer(const int& width, const int& height)
+Raytracer::Raytracer(int width, int height)
   : width_ {width},
     height_ {height},
     frame_buffer_ {} {
         frame_buffer_.reserve(width_ * height_);
-    }
+}
 
 void Raytracer::render() {
     for (int i = 0; i < height_; i++) {

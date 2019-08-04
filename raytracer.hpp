@@ -8,7 +8,7 @@ namespace raytracer {
 
 class Raytracer {
     public:
-        Raytracer(const int& width, const int& height);
+        Raytracer(int width, int height);
         void render();
 
     private:
