@@ -8,12 +8,13 @@ namespace raytracer {
 
 class Raytracer {
     public:
-        Raytracer(int width, int height);
+        Raytracer(int width = 1000, int height = 1000, int fov = 90);
         void render();
 
     private:
         const int width_;
         const int height_;
+        const int fov_;
         void writeToFile() const;
         std::vector<geometry::Vector> frame_buffer_;
 };

@@ -3,9 +3,10 @@
 
 namespace raytracer {
 
-Raytracer::Raytracer(int width, int height)
+Raytracer::Raytracer(int width, int height, int fov)
   : width_ {width},
     height_ {height},
+    fov_ {fov},
     frame_buffer_ {} {
         frame_buffer_.reserve(width_ * height_);
 }
@@ -41,6 +42,6 @@ uint8_t scaleTo256Bits(float f) {
 }  // namespace raytracer
 
 int main(int argc, char* argv[]) {
-    raytracer::Raytracer rt {1000, 1000};
+    raytracer::Raytracer rt {};
     rt.render();
 }
