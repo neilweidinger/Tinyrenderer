@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include "raytracer.hpp"
 
 namespace raytracer {
@@ -15,9 +16,9 @@ void Raytracer::render() {
     for (int i = 0; i < height_; i++) {
         for (int j = 0; j < width_; j++) {
             frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j),
-                                 geometry::Vector {scaleTo256Bits(i / static_cast<float>(height_)),
+                                 geometry::Vector {scaleTo256Bits(i / static_cast<double>(height_)),
                                  0,
-                                 scaleTo256Bits(j / static_cast<float>(width_))});
+                                 scaleTo256Bits(j / static_cast<double>(width_))});
         }
     }
 
@@ -35,7 +36,7 @@ void Raytracer::writeToFile() const {
     ofs.close();
 }
 
-uint8_t scaleTo256Bits(float f) {
+double scaleTo256Bits(double f) {
     return static_cast<uint8_t>(f * 255);
 }
 
@@ -44,4 +45,7 @@ uint8_t scaleTo256Bits(float f) {
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
     rt.render();
+
+    geometry::Sphere s {geometry::Vector {0, 0, 10}, 5};
+    std::cout << std::boolalpha << s.intersectsWithRay(geometry::Vector {1, 0, 6}) << "\n";
 }

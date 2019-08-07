@@ -5,7 +5,7 @@ namespace geometry {
 
 // ---------- VECTOR CLASS ----------
 
-Vector::Vector(uint8_t x, uint8_t y, uint8_t z)
+Vector::Vector(double x, double y, double z)
   : x_val_ {x},
     y_val_ {y},
     z_val_ {z}
@@ -25,8 +25,8 @@ void Vector::scalarMultiply(int scalar) {
 }
 
 // non-destructively scalar multiplies a vector, returning a new copy
-Vector Vector::scalarMultiply(int scalar) const {
-    return Vector(x_val_ * scalar, y_val_ * scalar, z_val_ * scalar);
+Vector scalarMultiply(int scalar, Vector vec) {
+    return Vector {vec.x_val_ * scalar, vec.y_val_ * scalar, vec.z_val_ * scalar};
 }
 
 Vector& Vector::operator+=(const Vector& rhs) {
@@ -77,7 +77,7 @@ bool Sphere::intersectsWithRay(const Vector& ray) {
         return false;
     }
 
-    Vector projection_onto_ray = ray.scalarMultiply((center_.dotProduct(ray) / ray.dotProduct(ray)));
+    Vector projection_onto_ray = scalarMultiply((center_.dotProduct(ray) / ray.dotProduct(ray)), ray);
     Vector center_to_projection = center_ - projection_onto_ray;
     double center_to_projection_dist = length(center_to_projection);
 

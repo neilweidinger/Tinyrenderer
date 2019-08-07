@@ -19,7 +19,7 @@ class Raytracer {
         std::vector<geometry::Vector> frame_buffer_;  // represents a vector of rgb vectors
 };
 
-uint8_t scaleTo256Bits(float f);
+double scaleTo256Bits(double f);
 
 }  // namespace raytracer
 
