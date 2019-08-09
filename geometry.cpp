@@ -81,7 +81,7 @@ bool Sphere::intersectsWithRay(const Vector& ray) {
     Vector center_to_projection = center_ - projection_onto_ray;
     double center_to_projection_dist = length(center_to_projection);
 
-    return center_to_projection_dist > radius_;
+    return radius_ > center_to_projection_dist;
 }
 
 }  // namespace geometry
