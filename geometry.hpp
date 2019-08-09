@@ -7,10 +7,10 @@ namespace geometry {
 
 class Vector {
     public:
-        Vector(double x, double y, double z);
-        double getX() const;
-        double getY() const;
-        double getZ() const;
+        Vector(float x, float y, float z);
+        float getX() const;
+        float getY() const;
+        float getZ() const;
         int dotProduct(const Vector& vec) const;
         void scalarMultiply(int scalar);
         friend Vector scalarMultiply(int scalar, Vector vec);
@@ -19,12 +19,12 @@ class Vector {
         friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 
     private:
-        double x_val_;
-        double y_val_;
-        double z_val_;
+        float x_val_;
+        float y_val_;
+        float z_val_;
 };
 
-double length(const Vector& vec);
+float length(const Vector& vec);
 Vector operator+(Vector lhs, const Vector& rhs);
 Vector operator-(Vector lhs, const Vector& rhs);
 

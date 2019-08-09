@@ -16,9 +16,9 @@ void Raytracer::render() {
     for (int i = 0; i < height_; i++) {
         for (int j = 0; j < width_; j++) {
             frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j),
-                                 geometry::Vector {scaleTo256Bits(i / static_cast<double>(height_)),
-                                 0,
-                                 scaleTo256Bits(j / static_cast<double>(width_))});
+                                 geometry::Vector {scaleTo256Bits(i / static_cast<float>(width_)),
+                                                   scaleTo256Bits(j / static_cast<float>(height_)),
+                                                   0.2});
         }
     }
 
@@ -39,7 +39,7 @@ void Raytracer::writeToFile() const {
     ofs.close();
 }
 
-double scaleTo256Bits(double f) {
+float scaleTo256Bits(float f) {
     return static_cast<uint8_t>(f * 255);
 }
 

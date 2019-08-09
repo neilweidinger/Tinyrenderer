@@ -5,21 +5,21 @@ namespace geometry {
 
 // ---------- VECTOR CLASS ----------
 
-Vector::Vector(double x, double y, double z)
+Vector::Vector(float x, float y, float z)
   : x_val_ {x},
     y_val_ {y},
     z_val_ {z}
 {}
 
-double Vector::getX() const {
+float Vector::getX() const {
     return x_val_;
 }
 
-double Vector::getY() const {
+float Vector::getY() const {
     return y_val_;
 }
 
-double Vector::getZ() const {
+float Vector::getZ() const {
     return z_val_;
 }
 
@@ -57,7 +57,7 @@ Vector& Vector::operator-=(const Vector& rhs) {
     return *this;
 }
 
-double length(const Vector& vec) {
+float length(const Vector& vec) {
     return std::sqrt(vec.dotProduct(vec));
 }
 
@@ -91,7 +91,7 @@ bool Sphere::intersectsWithRay(const Vector& ray) {
 
     Vector projection_onto_ray = scalarMultiply((center_.dotProduct(ray) / ray.dotProduct(ray)), ray);
     Vector center_to_projection = center_ - projection_onto_ray;
-    double center_to_projection_dist = length(center_to_projection);
+    float center_to_projection_dist = length(center_to_projection);
 
     return radius_ > center_to_projection_dist;
 }
