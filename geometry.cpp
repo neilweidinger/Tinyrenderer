@@ -11,6 +11,18 @@ Vector::Vector(double x, double y, double z)
     z_val_ {z}
 {}
 
+double Vector::getX() const {
+    return x_val_;
+}
+
+double Vector::getY() const {
+    return y_val_;
+}
+
+double Vector::getZ() const {
+    return z_val_;
+}
+
 int Vector::dotProduct(const Vector& Vec) const {
     return this->x_val_ * Vec.x_val_ +
            this->y_val_ * Vec.y_val_ +

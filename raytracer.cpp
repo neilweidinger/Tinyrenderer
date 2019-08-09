@@ -30,7 +30,10 @@ void Raytracer::writeToFile() const {
     ofs << "P6\n" << width_ << " " << height_ << "\n" << 255 << "\n";
 
     for (int i = 0; i < frame_buffer_.size(); i++) {
-        ofs << frame_buffer_[i];
+        uint8_t r = static_cast<uint8_t>(frame_buffer_[i].getX());
+        uint8_t g = static_cast<uint8_t>(frame_buffer_[i].getY());
+        uint8_t b = static_cast<uint8_t>(frame_buffer_[i].getZ());
+        ofs << r << g << b;
     }
 
     ofs.close();

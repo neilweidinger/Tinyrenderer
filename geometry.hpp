@@ -8,6 +8,9 @@ namespace geometry {
 class Vector {
     public:
         Vector(double x, double y, double z);
+        double getX() const;
+        double getY() const;
+        double getZ() const;
         int dotProduct(const Vector& vec) const;
         void scalarMultiply(int scalar);
         friend Vector scalarMultiply(int scalar, Vector vec);
