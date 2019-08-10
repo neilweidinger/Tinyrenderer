@@ -2,7 +2,7 @@
 #define RAYTRACER_HPP
 
 #include <vector>
-#include "geometry.hpp"
+#include "vector.hpp"
 
 namespace raytracer {
 
@@ -15,8 +15,9 @@ class Raytracer {
         const int width_;
         const int height_;
         const int fov_;
-        void writeToFile() const;
         std::vector<geometry::Vector> frame_buffer_;  // represents a vector of rgb vectors
+
+        void writeToFile() const;
 };
 
 float scaleTo256Bits(float f);

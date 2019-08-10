@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_HPP
-#define GEOMETRY_HPP
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 
 #include <ostream>
 
@@ -28,16 +28,6 @@ float length(const Vector& vec);
 Vector operator+(Vector lhs, const Vector& rhs);
 Vector operator-(Vector lhs, const Vector& rhs);
 
-class Sphere {
-    public:
-        Sphere(Vector center, int radius);
-        bool intersectsWithRay(const Vector& ray);
-
-    private:
-        Vector center_;
-        int radius_;
-};
-
 }  // namespace geometry
 
-#endif  // GEOMETRY_HPP
+#endif  // VECTOR_HPP

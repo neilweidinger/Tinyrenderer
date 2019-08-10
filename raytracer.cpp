@@ -49,6 +49,6 @@ int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
     rt.render();
 
-    geometry::Sphere s {geometry::Vector {0, 0, 10}, 5};
-    std::cout << std::boolalpha << s.intersectsWithRay(geometry::Vector {1, 0, 6}) << "\n";
+    /* geometry::Sphere s {geometry::Vector {0, 0, 10}, 5}; */
+    /* std::cout << std::boolalpha << s.intersectsWithRay(geometry::Vector {1, 0, 6}) << "\n"; */
 }
