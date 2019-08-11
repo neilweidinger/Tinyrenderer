@@ -1,5 +1,5 @@
 TARGET = run
-OBJS = raytracer.o vector.o sphere.o
+OBJS = raytracer.o vector.o sphere.o ray.o
 CXX = clang++
 CXXFLAGS = -std=c++11 -Wall
 

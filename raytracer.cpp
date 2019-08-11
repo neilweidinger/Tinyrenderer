@@ -7,7 +7,6 @@ namespace raytracer {
 Raytracer::Raytracer(int width, int height, int fov)
   : width_ {width},
     height_ {height},
-    fov_ {fov},
     frame_buffer_ {} {
         frame_buffer_.reserve(width_ * height_);
 }
@@ -16,9 +15,11 @@ void Raytracer::render() {
     for (int i = 0; i < height_; i++) {
         for (int j = 0; j < width_; j++) {
             frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j),
-                                 geometry::Vector {scaleTo256Bits(i / static_cast<float>(width_)),
-                                                   scaleTo256Bits(j / static_cast<float>(height_)),
-                                                   0.2});
+                                 geometry::Vector {
+                                     scaleTo256Bits(i / static_cast<float>(width_)),
+                                     scaleTo256Bits(j / static_cast<float>(height_)),
+                                     0.2
+                                 });
         }
     }
 

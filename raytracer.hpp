@@ -14,8 +14,7 @@ class Raytracer {
     private:
         const int width_;
         const int height_;
-        const int fov_;
-        std::vector<geometry::Vector> frame_buffer_;  // represents a vector of rgb vectors
+        std::vector<geometry::Vector> frame_buffer_;  // represents a buffer of rgb vectors
 
         void writeToFile() const;
 };
