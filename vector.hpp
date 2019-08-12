@@ -11,9 +11,8 @@ class Vector {
         float getX() const;
         float getY() const;
         float getZ() const;
-        int dotProduct(const Vector& vec) const;
-        void scalarMultiply(int scalar);
-        friend Vector scalarMultiply(int scalar, Vector vec);
+        float dotProduct(const Vector& vec) const;
+        void scalarMultiply(float scalar);
         Vector& operator+=(const Vector& rhs);
         Vector& operator-=(const Vector& rhs);
         friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
@@ -25,6 +24,8 @@ class Vector {
 };
 
 float length(const Vector& vec);
+Vector scalarMultiply(float scalar, const Vector& vec);
+Vector normalize(const Vector& vec);
 Vector operator+(Vector lhs, const Vector& rhs);
 Vector operator-(Vector lhs, const Vector& rhs);
 

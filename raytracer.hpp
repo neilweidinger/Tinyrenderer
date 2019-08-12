@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "vector.hpp"
+#include "ray.hpp"
 
 namespace raytracer {
 
@@ -14,9 +15,12 @@ class Raytracer {
     private:
         const int width_;
         const int height_;
+        const int fov_;
         std::vector<geometry::Vector> frame_buffer_;  // represents a buffer of rgb vectors
 
         void writeToFile() const;
+        geometry::Vector color(int pixel_x, int pixel_y) const;
+        geometry::Ray cast_ray(int pixel_x, int pixel_y) const;
 };
 
 float scaleTo256Bits(float f);
