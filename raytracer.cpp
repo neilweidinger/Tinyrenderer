@@ -5,6 +5,9 @@
 
 namespace raytracer {
 
+using geometry::Vector;
+using geometry::Ray;
+
 Raytracer::Raytracer(int width, int height, int fov)
   : width_ {width},
     height_ {height},
@@ -38,13 +41,13 @@ void Raytracer::writeToFile() const {
     ofs.close();
 }
 
-geometry::Vector Raytracer::color(int pixel_x, int pixel_y) const {
-    geometry::Vector unit_direction_ray = cast_ray(pixel_x, pixel_y).getDir();  // dir automatically normalized in ray ctor
+Vector Raytracer::color(int pixel_x, int pixel_y) const {
+    Vector unit_direction_ray = cast_ray(pixel_x, pixel_y).getDir();  // dir automatically normalized in ray ctor
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
     // lerp between white and light blue
-    geometry::Vector white = geometry::Vector {255, 255, 255};
-    geometry::Vector blue = geometry::Vector {127, 178, 255};
+    Vector white = Vector {255, 255, 255};
+    Vector blue = Vector {127, 178, 255};
 
     white.scalarMultiply(1 - intensity);
     blue.scalarMultiply(intensity);
@@ -52,7 +55,7 @@ geometry::Vector Raytracer::color(int pixel_x, int pixel_y) const {
     return white + blue;
 }
 
-geometry::Ray Raytracer::cast_ray(int pixel_x, int pixel_y) const {
+Ray Raytracer::cast_ray(int pixel_x, int pixel_y) const {
     float ndc_x = (pixel_x + 0.5) / width_;
     float ndc_y = (pixel_y + 0.5) / height_;
 
@@ -61,7 +64,7 @@ geometry::Ray Raytracer::cast_ray(int pixel_x, int pixel_y) const {
     float world_x = (2 * ndc_x - 1) * std::tan(fov_ / 2 * M_PI / 180) * aspect_ratio;
     float world_y = (1 - 2 * ndc_y) * std::tan(fov_ / 2 * M_PI / 180);
 
-    return geometry::Ray {geometry::Vector {0, 0, 0}, geometry::Vector {world_x, world_y, -1}};
+    return Ray {Vector {0, 0, 0}, Vector {world_x, world_y, -1}};
 }
 
 float scaleTo256Bits(float f) {
@@ -74,6 +77,6 @@ int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
     rt.render();
 
-    /* geometry::Sphere s {geometry::Vector {0, 0, 10}, 5}; */
-    /* std::cout << std::boolalpha << s.intersectsWithRay(geometry::Vector {1, 0, 6}) << "\n"; */
+    /* geometry::Sphere s {Vector {0, 0, 10}, 5}; */
+    /* std::cout << std::boolalpha << s.intersectsWithRay(Vector {1, 0, 6}) << "\n"; */
 }
