@@ -10,8 +10,7 @@ namespace raytracer {
 
 class Raytracer {
     public:
-        /* Raytracer(int width = 1000, int height = 1000, int fov = 90); */
-        Raytracer(int width = 1000, int height = 1000, int fov = 70);
+        Raytracer(int width = 1000, int height = 1000, int fov = 90);
         void addSphere(geometry::Sphere sphere);
         void render();
 
