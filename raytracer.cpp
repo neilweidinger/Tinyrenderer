@@ -42,7 +42,7 @@ void Raytracer::writeToFile() const {
 }
 
 Vector Raytracer::color(int pixel_x, int pixel_y) const {
-    Vector unit_direction_ray = cast_ray(pixel_x, pixel_y).getDir();  // dir automatically normalized in ray ctor
+    Vector unit_direction_ray = castRay(pixel_x, pixel_y).getDir();  // dir automatically normalized in ray ctor
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
     // lerp between white and light blue
@@ -55,7 +55,7 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
     return white + blue;
 }
 
-Ray Raytracer::cast_ray(int pixel_x, int pixel_y) const {
+Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     float ndc_x = (pixel_x + 0.5) / width_;
     float ndc_y = (pixel_y + 0.5) / height_;
 

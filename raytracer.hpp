@@ -20,7 +20,7 @@ class Raytracer {
 
         void writeToFile() const;
         geometry::Vector color(int pixel_x, int pixel_y) const;
-        geometry::Ray cast_ray(int pixel_x, int pixel_y) const;
+        geometry::Ray castRay(int pixel_x, int pixel_y) const;
 };
 
 float scaleTo256Bits(float f);
