@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "sphere.hpp"
 
 namespace geometry {
@@ -18,7 +20,16 @@ bool Sphere::intersectsWithRay(const Ray& ray) {
         return false;
     }
 
-    return true;
+    if (discriminant == 0) {
+        float root = -b / 2 * a;
+
+        return root >= 0;
+    }
+
+    float root1 = (-b + std::sqrt(discriminant)) / 2 * a;
+    float root2 = (-b - std::sqrt(discriminant)) / 2 * a;
+
+    return root1 >= 0 || root2 >= 0;
 }
 
 }  // namespace geometry
