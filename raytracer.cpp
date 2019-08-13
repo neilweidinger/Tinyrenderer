@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iostream>
+#include <iostream>  // DELETE
 #include <cmath>
 #include "raytracer.hpp"
 
@@ -14,6 +14,10 @@ Raytracer::Raytracer(int width, int height, int fov)
     fov_ {fov},
     frame_buffer_ {} {
         frame_buffer_.reserve(width_ * height_);
+}
+
+void Raytracer::addSphere(geometry::Sphere sphere) {
+    spheres_.push_back(sphere);
 }
 
 void Raytracer::render() {
@@ -42,7 +46,14 @@ void Raytracer::writeToFile() const {
 }
 
 Vector Raytracer::color(int pixel_x, int pixel_y) const {
-    Vector unit_direction_ray = castRay(pixel_x, pixel_y).getDir();  // dir automatically normalized in ray ctor
+    Ray camera_ray = castRay(pixel_x, pixel_y);
+    Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
+
+    // our camera ray hit a sphere, so return color of sphere at ray
+    if (hitSphere(camera_ray)) {
+        return Vector {255, 0, 0};
+    }
+
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
     // lerp between white and light blue
@@ -67,6 +78,16 @@ Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     return Ray {Vector {0, 0, 0}, Vector {world_x, world_y, -1}};
 }
 
+bool Raytracer::hitSphere(const Ray& camera_ray) const {
+    for (geometry::Sphere sphere : spheres_) {
+        if (sphere.intersectsWithRay(camera_ray)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 float scaleTo256Bits(float f) {
     return static_cast<uint8_t>(f * 255);
 }
@@ -75,6 +96,8 @@ float scaleTo256Bits(float f) {
 
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
+    rt.addSphere(geometry::Sphere(geometry::Vector(4, -3, -15), 5));
+    rt.addSphere(geometry::Sphere(geometry::Vector(-5, 6, -10), 5));
     rt.render();
 
     /* geometry::Sphere s {Vector {0, 0, 10}, 5}; */

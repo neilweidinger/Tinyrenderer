@@ -2,13 +2,14 @@
 #define SPHERE_HPP
 
 #include "vector.hpp"
+#include "ray.hpp"
 
 namespace geometry {
 
 class Sphere {
     public:
         Sphere(Vector center, int radius);
-        bool intersectsWithRay(const Vector& ray);
+        bool intersectsWithRay(const Ray& ray);
 
     private:
         Vector center_;

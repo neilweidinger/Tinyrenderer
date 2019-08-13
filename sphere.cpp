@@ -6,17 +6,19 @@ Sphere::Sphere(Vector center, int radius)
   : center_ {center},
     radius_ {radius} {}
 
-bool Sphere::intersectsWithRay(const Vector& ray) {
-    // sphere is behind ray
-    if (center_.dotProduct(ray) < 0) {
+bool Sphere::intersectsWithRay(const Ray& ray) {
+    geometry::Vector oc = ray.getOrigin() - center_;
+    float a = 1;
+    float b = 2 * ray.getDir().dotProduct(ray.getOrigin() - center_);
+    float c = oc.dotProduct(oc) - radius_ * radius_;
+
+    float discriminant = b * b - 4 * a * c;
+
+    if (discriminant < 0) {
         return false;
     }
 
-    Vector projection_onto_ray = scalarMultiply((center_.dotProduct(ray) / ray.dotProduct(ray)), ray);
-    Vector center_to_projection = center_ - projection_onto_ray;
-    float center_to_projection_dist = length(center_to_projection);
-
-    return radius_ > center_to_projection_dist;
+    return true;
 }
 
 }  // namespace geometry
