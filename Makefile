@@ -1,11 +1,19 @@
-TARGET = run
-OBJS = raytracer.o vector.o ray.o sphere.o
+TARGET = renderer
+BUILDDIR = bin
+OBJS = $(addprefix $(BUILDDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
 CXX = clang++
 CXXFLAGS = -std=c++11 -Wall
 
 .PHONY: all clean
-all: $(OBJS)
+
+all: dir $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
+dir:
+	mkdir -p $(BUILDDIR)
+
+$(BUILDDIR)/%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
 clean:
-	rm -f *.o $(TARGET)
+	rm -rf $(BUILDDIR) $(TARGET)
