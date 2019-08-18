@@ -4,9 +4,9 @@ OBJS = $(addprefix $(BUILDDIR)/, $(patsubst %.c, %.o, $(wildcard *.c)) $(patsubs
 CXX = clang++
 CXXFLAGS = -std=c++11 -Wall
 
-.PHONY: all clean
+.PHONY: clean
 
-all: $(OBJS)
+$(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 $(BUILDDIR)/%.o: %.cpp | $(BUILDDIR)
