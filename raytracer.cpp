@@ -96,10 +96,7 @@ float scaleTo256Bits(float f) {
 
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
-    rt.addSphere(geometry::Sphere(geometry::Vector(4, -3, -15), 5));
+    rt.addSphere(geometry::Sphere(geometry::Vector(4, -4, -15), 5));
     rt.addSphere(geometry::Sphere(geometry::Vector(-5, 6, -10), 5));
     rt.render();
-
-    /* geometry::Sphere s {Vector {0, 0, 10}, 5}; */
-    /* std::cout << std::boolalpha << s.intersectsWithRay(Vector {1, 0, 6}) << "\n"; */
 }
