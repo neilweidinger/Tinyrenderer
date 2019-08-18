@@ -6,14 +6,14 @@ CXXFLAGS = -std=c++11 -Wall
 
 .PHONY: all clean
 
-all: dir $(OBJS)
+all: $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
-dir:
-	mkdir -p $(BUILDDIR)
-
-$(BUILDDIR)/%.o: %.cpp
+$(BUILDDIR)/%.o: %.cpp | $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
