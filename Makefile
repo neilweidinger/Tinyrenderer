@@ -1,6 +1,6 @@
 TARGET = renderer
 BUILDDIR = bin
-OBJS = $(addprefix $(BUILDDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
+OBJS = $(addprefix $(BUILDDIR)/, $(patsubst %.c, %.o, $(wildcard *.c)) $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
 CXX = clang++
 CXXFLAGS = -std=c++11 -Wall
 
