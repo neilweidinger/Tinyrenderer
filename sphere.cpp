@@ -9,6 +9,13 @@ Sphere::Sphere(Vector center, int radius)
     radius_ {radius} {}
 
 bool Sphere::intersectsWithRay(const Ray& ray) {
+    return findIntersection(ray) > 0;
+}
+
+// returns t where t represents distance along direction vector from ray origin
+// returns -1.0 if there is no t (ray doesn't hit sphere, negative value so equivalent to ray intersecting behind camera)
+// returns smaller t if there are two (first t that ray hits)
+float Sphere::findIntersection(const Ray& ray) {
     geometry::Vector oc = ray.getOrigin() - center_;
     float a = 1;
     float b = 2 * ray.getDir().dotProduct(ray.getOrigin() - center_);
@@ -17,19 +24,12 @@ bool Sphere::intersectsWithRay(const Ray& ray) {
     float discriminant = b * b - 4 * a * c;
 
     if (discriminant < 0) {
-        return false;
+        // t value doesn't actually exist, but return a negative value so that
+        // this is equivalent to the ray intersecting behind the camera
+        return -1.0;
     }
 
-    if (discriminant == 0) {
-        float root = -b / 2 * a;
-
-        return root >= 0;
-    }
-
-    float root1 = (-b + std::sqrt(discriminant)) / 2 * a;
-    float root2 = (-b - std::sqrt(discriminant)) / 2 * a;
-
-    return root1 >= 0 || root2 >= 0;
+    return (-b - std::sqrt(discriminant)) / 2 * a;
 }
 
 }  // namespace geometry

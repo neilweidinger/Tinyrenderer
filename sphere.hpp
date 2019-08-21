@@ -14,6 +14,8 @@ class Sphere {
     private:
         Vector center_;
         int radius_;
+
+        float findIntersection(const Ray& ray);
 };
 
 }  // namespace geometry
