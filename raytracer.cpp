@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>  // DELETE
 #include <cmath>
 #include "raytracer.hpp"
 
@@ -23,8 +22,7 @@ void Raytracer::addSphere(geometry::Sphere sphere) {
 void Raytracer::render() {
     for (int i = 0; i < height_; i++) {
         for (int j = 0; j < width_; j++) {
-            frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j),
-                                 color(j, i));
+            frame_buffer_.insert(frame_buffer_.begin() + ((i * width_) + j), color(j, i));
         }
     }
 
