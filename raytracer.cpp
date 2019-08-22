@@ -45,12 +45,14 @@ void Raytracer::writeToFile() const {
 
 Vector Raytracer::color(int pixel_x, int pixel_y) const {
     Ray camera_ray = castRay(pixel_x, pixel_y);
-    Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
+    Vector intersection_normal {};
 
     // our camera ray hit a sphere, so return color of sphere at ray
-    if (hitSphere(camera_ray)) {
+    if (hitSphere(camera_ray, intersection_normal)) {
         return Vector {255, 0, 0};
     }
+
+    Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
 
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
@@ -76,9 +78,12 @@ Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     return Ray {Vector {0, 0, 0}, Vector {world_x, world_y, -1}};
 }
 
-bool Raytracer::hitSphere(const Ray& camera_ray) const {
+bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal) const {
     for (geometry::Sphere sphere : spheres_) {
-        if (sphere.intersectsWithRay(camera_ray)) {
+        float intersection = sphere.findIntersection(camera_ray);
+
+        if (intersection > 0) {
+            intersection_normal = geometry::normalize(camera_ray.pointAtParameter(intersection) - sphere.getCenter());
             return true;
         }
     }

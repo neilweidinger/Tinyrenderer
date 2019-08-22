@@ -7,13 +7,14 @@ namespace geometry {
 
 class Ray {
     public:
-        Ray(const geometry::Vector& origin, const geometry::Vector& direction);
-        geometry::Vector getOrigin() const;
-        geometry::Vector getDir() const;
+        Ray(const Vector& origin, const Vector& direction);
+        Vector getOrigin() const;
+        Vector getDir() const;
+        Vector pointAtParameter(float t) const;
 
     private:
-        geometry::Vector origin_;
-        geometry::Vector dir_;
+        Vector origin_;
+        Vector dir_;
 };
 
 }

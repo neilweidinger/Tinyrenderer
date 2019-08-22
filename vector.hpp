@@ -7,6 +7,7 @@ namespace geometry {
 
 class Vector {
     public:
+        Vector();
         Vector(float x, float y, float z);
         float getX() const;
         float getY() const;

@@ -2,17 +2,21 @@
 
 namespace geometry {
 
-Ray::Ray(const geometry::Vector& origin, const geometry::Vector& direction)
+Ray::Ray(const Vector& origin, const Vector& direction)
   : origin_ {origin},
     dir_ {normalize(direction)}
 {}
 
-geometry::Vector Ray::getOrigin() const {
+Vector Ray::getOrigin() const {
     return origin_;
 }
 
-geometry::Vector Ray::getDir() const {
+Vector Ray::getDir() const {
     return dir_;
+}
+
+Vector Ray::pointAtParameter(float t) const {
+    return origin_ + scalarMultiply(t, dir_);
 }
 
 }  // namespace geometry

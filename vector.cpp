@@ -3,6 +3,12 @@
 
 namespace geometry {
 
+Vector::Vector()
+  : x_val_ {0},
+    y_val_ {0},
+    z_val_ {0}
+{}
+
 Vector::Vector(float x, float y, float z)
   : x_val_ {x},
     y_val_ {y},

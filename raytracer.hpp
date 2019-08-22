@@ -24,7 +24,7 @@ class Raytracer {
         void writeToFile() const;
         geometry::Vector color(int pixel_x, int pixel_y) const;
         geometry::Ray castRay(int pixel_x, int pixel_y) const;
-        bool hitSphere(const geometry::Ray& camera_ray) const;
+        bool hitSphere(const geometry::Ray& camera_ray, geometry::Vector& intersection_normal) const;
 };
 
 float scaleTo256Bits(float f);
