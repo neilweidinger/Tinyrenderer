@@ -47,9 +47,11 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
     Ray camera_ray = castRay(pixel_x, pixel_y);
     Vector intersection_normal {};
 
-    // our camera ray hit a sphere, so return color of sphere at ray
     if (hitSphere(camera_ray, intersection_normal)) {
-        return Vector {255, 0, 0};
+        return Vector {
+                scaleTo256Bits((intersection_normal.getX() + 1) * 0.5),
+                scaleTo256Bits((intersection_normal.getY() + 1) * 0.5),
+                scaleTo256Bits((intersection_normal.getZ() + 1) * 0.5) };
     }
 
     Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above

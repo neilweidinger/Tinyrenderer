@@ -1,5 +1,4 @@
 #include <cmath>
-
 #include "sphere.hpp"
 
 namespace geometry {
