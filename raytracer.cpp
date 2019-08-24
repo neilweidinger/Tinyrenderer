@@ -51,15 +51,14 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
         return Vector {
                 scaleTo256Bits((intersection_normal.getX() + 1) * 0.5),
                 scaleTo256Bits((intersection_normal.getY() + 1) * 0.5),
-                scaleTo256Bits((intersection_normal.getZ() + 1) * 0.5) };
+                scaleTo256Bits((intersection_normal.getZ() + 1) * 0.5)};
     }
 
     Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
-
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
-    Vector white = geometry::scalarMultiply(1 - intensity, Vector(255, 255, 255));
-    Vector blue = geometry::scalarMultiply(intensity, Vector(127, 178, 255));
+    Vector white = geometry::scalarMultiply(1 - intensity, Vector{255, 255, 255});
+    Vector blue = geometry::scalarMultiply(intensity, Vector{127, 178, 255});
 
     return white + blue;
 }
@@ -97,7 +96,7 @@ float scaleTo256Bits(float f) {
 
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
-    rt.addSphere(geometry::Sphere(geometry::Vector(4, -4, -15), 5));
-    rt.addSphere(geometry::Sphere(geometry::Vector(-5, 6, -10), 5));
+    rt.addSphere(geometry::Sphere{geometry::Vector{4, -4, -15}, 5});
+    rt.addSphere(geometry::Sphere{geometry::Vector{-5, 6, -10}, 5});
     rt.render();
 }
