@@ -96,7 +96,7 @@ float scaleTo256Bits(float f) {
 
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
-    rt.addSphere(geometry::Sphere{geometry::Vector{4, -4, -15}, 5});
-    rt.addSphere(geometry::Sphere{geometry::Vector{-5, 6, -10}, 5});
+    rt.addSphere(geometry::Sphere{geometry::Vector{4, -4, -20}, 5});
+    rt.addSphere(geometry::Sphere{geometry::Vector{-5, 6, -15}, 5});
     rt.render();
 }
