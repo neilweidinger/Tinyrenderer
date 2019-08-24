@@ -58,12 +58,8 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
 
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
-    // lerp between white and light blue
-    Vector white = Vector {255, 255, 255};
-    Vector blue = Vector {127, 178, 255};
-
-    white.scalarMultiply(1 - intensity);
-    blue.scalarMultiply(intensity);
+    Vector white = geometry::scalarMultiply(1 - intensity, Vector(255, 255, 255));
+    Vector blue = geometry::scalarMultiply(intensity, Vector(127, 178, 255));
 
     return white + blue;
 }

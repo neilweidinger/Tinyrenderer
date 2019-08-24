@@ -33,13 +33,6 @@ float Vector::dotProduct(const Vector& Vec) const {
            this->z_val_ * Vec.z_val_;
 }
 
-// destructively scalar multiples a vector
-void Vector::scalarMultiply(float scalar) {
-    x_val_ *= scalar;
-    y_val_ *= scalar;
-    z_val_ *= scalar;
-}
-
 // non-destructively scalar multiplies a vector, returning a new copy
 Vector scalarMultiply(float scalar, const Vector& vec) {
     return Vector {vec.getX() * scalar, vec.getY() * scalar, vec.getZ() * scalar};

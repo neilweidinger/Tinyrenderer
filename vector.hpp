@@ -13,7 +13,6 @@ class Vector {
         float getY() const;
         float getZ() const;
         float dotProduct(const Vector& vec) const;
-        void scalarMultiply(float scalar);
         Vector& operator+=(const Vector& rhs);
         Vector& operator-=(const Vector& rhs);
         friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
