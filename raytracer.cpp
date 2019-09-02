@@ -52,10 +52,20 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
     Vector intersection_normal {};
 
     if (hitSphere(camera_ray, intersection_normal)) {
+        float intensity = 0;
+
+        for (lighting::Light light : lights_) {
+            Vector dir_to_light = geometry::scalarMultiply(-1, light.getDirection());
+            float lambertian = std::max(0.f, intersection_normal.dotProduct(dir_to_light));
+
+            intensity += light.getIntensity() * lambertian;
+        }
+
         return Vector {
-                scaleTo256Bits((intersection_normal.getX() + 1) * 0.5),
-                scaleTo256Bits((intersection_normal.getY() + 1) * 0.5),
-                scaleTo256Bits((intersection_normal.getZ() + 1) * 0.5)};
+            std::min(255.f, 120 * intensity),
+            std::min(255.f, 0 * intensity),
+            std::min(255.f, 100 * intensity)
+        };
     }
 
     Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
@@ -102,6 +112,6 @@ int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};
     rt.addSphere(geometry::Sphere{geometry::Vector{4, -4, -20}, 5});
     rt.addSphere(geometry::Sphere{geometry::Vector{-5, 6, -15}, 5});
-    rt.addLight(lighting::Light{2, geometry::Vector{0, 0, -1}});
+    rt.addLight(lighting::Light{geometry::Vector{0, 0, -1}, 1.5});
     rt.render();
 }

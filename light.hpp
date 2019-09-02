@@ -7,7 +7,9 @@ namespace lighting {
 
 class Light {
     public:
-        Light(float intensity, const geometry::Vector& direction);
+        Light(const geometry::Vector& direction, float intensity);
+        float getIntensity() const;
+        geometry::Vector getDirection() const;
 
     private:
         float intensity_;

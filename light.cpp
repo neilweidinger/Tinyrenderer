@@ -2,9 +2,17 @@
 
 namespace lighting {
 
-Light::Light(float intensity, const geometry::Vector& direction)
+Light::Light(const geometry::Vector& direction, float intensity)
   : intensity_ {intensity},
-    direction_ {direction}
+    direction_ {geometry::normalize(direction)}
 {}
+
+float Light::getIntensity() const {
+    return intensity_;
+}
+
+geometry::Vector Light::getDirection() const {
+    return direction_;
+}
 
 }  // namespace lighting
