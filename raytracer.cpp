@@ -102,10 +102,6 @@ bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal) co
     return false;
 }
 
-float scaleTo256Bits(float f) {
-    return static_cast<uint8_t>(f * 255);
-}
-
 }  // namespace raytracer
 
 int main(int argc, char* argv[]) {

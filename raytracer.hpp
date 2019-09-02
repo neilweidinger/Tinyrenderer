@@ -30,8 +30,6 @@ class Raytracer {
         bool hitSphere(const geometry::Ray& camera_ray, geometry::Vector& intersection_normal) const;
 };
 
-float scaleTo256Bits(float f);
-
 }  // namespace raytracer
 
 #endif  // RAYTRACER_HPP
