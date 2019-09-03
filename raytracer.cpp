@@ -15,6 +15,14 @@ Raytracer::Raytracer(int width, int height, int fov)
         frame_buffer_.reserve(width_ * height_);
 }
 
+void Raytracer::addSphere(const geometry::Sphere& sphere) {
+    spheres_.push_back(sphere);
+}
+
+void Raytracer::addLight(const lighting::Light& light) {
+    lights_.push_back(light);
+}
+
 void Raytracer::render() {
     for (int i = 0; i < height_; i++) {
         for (int j = 0; j < width_; j++) {
@@ -23,14 +31,6 @@ void Raytracer::render() {
     }
 
     writeToFile();
-}
-
-void Raytracer::addSphere(const geometry::Sphere& sphere) {
-    spheres_.push_back(sphere);
-}
-
-void Raytracer::addLight(const lighting::Light& light) {
-    lights_.push_back(light);
 }
 
 void Raytracer::writeToFile() const {
@@ -112,11 +112,3 @@ Vector Raytracer::calculateLerpColor(const geometry::Ray& camera_ray) const {
 }
 
 }  // namespace raytracer
-
-int main(int argc, char* argv[]) {
-    raytracer::Raytracer rt {};
-    rt.addSphere(geometry::Sphere{geometry::Vector{4, -4, -20}, 5});
-    rt.addSphere(geometry::Sphere{geometry::Vector{-5, 6, -15}, 5});
-    rt.addLight(lighting::Light{geometry::Vector{0, 0, -1}, 1.5});
-    rt.render();
-}

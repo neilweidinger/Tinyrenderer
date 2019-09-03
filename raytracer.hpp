@@ -12,9 +12,9 @@ namespace raytracer {
 class Raytracer {
     public:
         Raytracer(int width = 1200, int height = 600, int fov = 60);
-        void render();
         void addSphere(const geometry::Sphere& sphere);
         void addLight(const lighting::Light& light);
+        void render();
 
     private:
         const int width_;
