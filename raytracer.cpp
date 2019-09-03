@@ -55,13 +55,7 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
         return calculateDiffuseColor(intersection_normal);
     }
 
-    Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
-    float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
-
-    Vector white = geometry::scalarMultiply(1 - intensity, Vector{255, 255, 255});
-    Vector blue = geometry::scalarMultiply(intensity, Vector{127, 178, 255});
-
-    return white + blue;
+    return calculateLerpColor(camera_ray);
 }
 
 Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
@@ -104,6 +98,17 @@ Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal) const
         std::min(255.f, 0 * intensity),
         std::min(255.f, 100 * intensity)
     };
+}
+
+// linear interpolation of two colors for background
+Vector Raytracer::calculateLerpColor(const geometry::Ray& camera_ray) const {
+    Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized
+    float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
+
+    Vector white = geometry::scalarMultiply(1 - intensity, Vector{255, 255, 255});
+    Vector blue = geometry::scalarMultiply(intensity, Vector{127, 178, 255});
+
+    return white + blue;
 }
 
 }  // namespace raytracer
