@@ -62,7 +62,7 @@ Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     float ndc_x = (pixel_x + 0.5) / width_;
     float ndc_y = (pixel_y + 0.5) / height_;
 
-    float aspect_ratio = width_ / height_;
+    float aspect_ratio = static_cast<float>(width_) / height_;  // cast to avoid int division
 
     float world_x = (2 * ndc_x - 1) * std::tan(fov_ / 2 * M_PI / 180) * aspect_ratio;
     float world_y = (1 - 2 * ndc_y) * std::tan(fov_ / 2 * M_PI / 180);
