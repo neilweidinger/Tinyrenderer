@@ -52,20 +52,7 @@ Vector Raytracer::color(int pixel_x, int pixel_y) const {
     Vector intersection_normal {};
 
     if (hitSphere(camera_ray, intersection_normal)) {
-        float intensity = 0;
-
-        for (lighting::Light light : lights_) {
-            Vector dir_to_light = geometry::scalarMultiply(-1, light.getDirection());
-            float lambertian = std::max(0.f, intersection_normal.dotProduct(dir_to_light));
-
-            intensity += light.getIntensity() * lambertian;
-        }
-
-        return Vector {
-            std::min(255.f, 120 * intensity),
-            std::min(255.f, 0 * intensity),
-            std::min(255.f, 100 * intensity)
-        };
+        return calculateDiffuseColor(intersection_normal);
     }
 
     Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized in ray ctor above
@@ -100,6 +87,23 @@ bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal) co
     }
 
     return false;
+}
+
+Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal) const {
+    float intensity = 0;
+
+    for (lighting::Light light : lights_) {
+        Vector dir_to_light = geometry::scalarMultiply(-1, light.getDirection());
+        float lambertian = std::max(0.f, intersection_normal.dotProduct(dir_to_light));
+
+        intensity += light.getIntensity() * lambertian;
+    }
+
+    return Vector {
+        std::min(255.f, 120 * intensity),
+        std::min(255.f, 0 * intensity),
+        std::min(255.f, 100 * intensity)
+    };
 }
 
 }  // namespace raytracer
