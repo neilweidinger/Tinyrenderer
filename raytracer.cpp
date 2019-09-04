@@ -50,9 +50,11 @@ void Raytracer::writeToFile() const {
 Vector Raytracer::color(int pixel_x, int pixel_y) const {
     Ray camera_ray = castRay(pixel_x, pixel_y);
     Vector intersection_normal {};
+    float intersection_param = 0;
 
-    if (hitSphere(camera_ray, intersection_normal)) {
-        return calculateDiffuseColor(intersection_normal);
+    if (hitSphere(camera_ray, intersection_normal, intersection_param)) {
+        Vector hit_point = camera_ray.pointAtParameter(intersection_param);
+        return calculateDiffuseColor(intersection_normal, hit_point);
     }
 
     return calculateLerpColor(camera_ray);
@@ -70,12 +72,12 @@ Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     return Ray {Vector {0, 0, 0}, Vector {world_x, world_y, -1}};
 }
 
-bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal) const {
+bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal, float& intersection_param) const {
     for (geometry::Sphere sphere : spheres_) {
-        float intersection = sphere.findIntersection(camera_ray);
+        intersection_param = sphere.findIntersection(camera_ray);
 
-        if (intersection > 0) {
-            intersection_normal = geometry::normalize(camera_ray.pointAtParameter(intersection) - sphere.getCenter());
+        if (intersection_param > 0) {
+            intersection_normal = geometry::normalize(camera_ray.pointAtParameter(intersection_param) - sphere.getCenter());
             return true;
         }
     }
@@ -83,10 +85,14 @@ bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal) co
     return false;
 }
 
-Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal) const {
+Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const {
     float intensity = 0;
 
     for (lighting::Light light : lights_) {
+        if (objectInWayofLight(light, hit_point)) {
+            continue;
+        }
+
         Vector dir_to_light = geometry::scalarMultiply(-1, light.getDirection());
         float lambertian = std::max(0.f, intersection_normal.dotProduct(dir_to_light));
 
@@ -101,7 +107,7 @@ Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal) const
 }
 
 // linear interpolation of two colors for background
-Vector Raytracer::calculateLerpColor(const geometry::Ray& camera_ray) const {
+Vector Raytracer::calculateLerpColor(const Ray& camera_ray) const {
     Vector unit_direction_ray = camera_ray.getDir();  // dir already normalized
     float intensity = 0.5 * (unit_direction_ray.getY() + 1);  // scale to [0, 1]
 
@@ -109,6 +115,19 @@ Vector Raytracer::calculateLerpColor(const geometry::Ray& camera_ray) const {
     Vector blue = geometry::scalarMultiply(intensity, Vector{127, 178, 255});
 
     return white + blue;
+}
+
+bool Raytracer::objectInWayofLight(const lighting::Light& light, const Vector& hit_point) const {
+    Vector unusedVector {};
+    float unusedFloat = 0;
+    Vector direction_to_light = geometry::scalarMultiply(-1, light.getDirection());
+    Ray ray_from_hit_point_to_light = Ray{hit_point, direction_to_light};
+
+    if (hitSphere(ray_from_hit_point_to_light, unusedVector, unusedFloat)) {
+        return true;
+    }
+
+    return false;
 }
 
 }  // namespace raytracer
