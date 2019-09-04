@@ -9,6 +9,9 @@
 
 namespace raytracer {
 
+using geometry::Vector;
+using geometry::Ray;
+
 class Raytracer {
     public:
         Raytracer(int width = 1200, int height = 600, int fov = 60);
@@ -20,17 +23,17 @@ class Raytracer {
         const int width_;
         const int height_;
         const int fov_;
-        std::vector<geometry::Vector> frame_buffer_;  // represents a buffer of rgb vectors
+        std::vector<Vector> frame_buffer_;  // represents a buffer of rgb vectors
         std::vector<geometry::Sphere> spheres_;
         std::vector<lighting::Light> lights_;
 
         void writeToFile() const;
-        geometry::Vector color(int pixel_x, int pixel_y) const;
-        geometry::Ray castRay(int pixel_x, int pixel_y) const;
-        bool hitSphere(const geometry::Ray& camera_ray, geometry::Vector& intersection_normal, float& intersection_param) const;
-        geometry::Vector calculateDiffuseColor(const geometry::Vector& intersection_normal, const geometry::Vector& hit_point) const;
-        geometry::Vector calculateLerpColor(const geometry::Ray& camera_ray) const;
-        bool objectInWayofLight(const lighting::Light& light, const geometry::Vector& hit_point) const;
+        Vector valueAtPixel(int pixel_x, int pixel_y) const;
+        Ray castRay(int pixel_x, int pixel_y) const;
+        bool hitSphere(const Ray& camera_ray, Vector& intersection_normal, float& intersection_param) const;
+        Vector calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const;
+        Vector calculateLerpColor(const Ray& camera_ray) const;
+        bool objectInWayofLight(const lighting::Light& light, const Vector& hit_point) const;
 };
 
 }  // namespace raytracer

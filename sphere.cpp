@@ -13,7 +13,7 @@ Sphere::Sphere(Vector center, int radius)
 float Sphere::findIntersection(const Ray& ray) const {
     geometry::Vector oc = ray.getOrigin() - center_;
     float a = 1;
-    float b = 2 * ray.getDir().dotProduct(oc);
+    float b = 2 * ray.getDirection().dotProduct(oc);
     float c = oc.dotProduct(oc) - radius_ * radius_;
 
     float discriminant = b * b - 4 * a * c;

@@ -9,7 +9,7 @@ class Ray {
     public:
         Ray(const Vector& origin, const Vector& direction);
         Vector getOrigin() const;
-        Vector getDir() const;
+        Vector getDirection() const;
         Vector pointAtParameter(float t) const;
 
     private:

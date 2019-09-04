@@ -11,7 +11,7 @@ Vector Ray::getOrigin() const {
     return origin_;
 }
 
-Vector Ray::getDir() const {
+Vector Ray::getDirection() const {
     return dir_;
 }
 
