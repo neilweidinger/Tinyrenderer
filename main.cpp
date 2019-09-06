@@ -1,4 +1,4 @@
-#include "raytracer.hpp"
+#include "src/raytracer.hpp"
 
 int main(int argc, char* argv[]) {
     raytracer::Raytracer rt {};

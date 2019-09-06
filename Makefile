@@ -1,6 +1,6 @@
 TARGET = renderer
 BUILDDIR = bin
-SRCS = $(wildcard *.cpp)
+SRCS = $(wildcard *.cpp) $(wildcard src/*.cpp)
 OBJS = $(addprefix $(BUILDDIR)/, $(SRCS:.cpp=.o))
 DEPS = $(OBJS:.o=.d)
 CXX = clang++
@@ -15,6 +15,7 @@ $(TARGET): $(OBJS)
 -include $(DEPS)
 
 $(BUILDDIR)/%.d: %.cpp | $(BUILDDIR)
+	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -MM -MT $(@:.d=.o) $< > $@
 
 $(BUILDDIR)/%.o: %.cpp
