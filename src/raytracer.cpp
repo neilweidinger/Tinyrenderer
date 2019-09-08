@@ -16,7 +16,7 @@ void Raytracer::addSphere(const geometry::Sphere& sphere) {
     spheres_.push_back(sphere);
 }
 
-void Raytracer::addLight(const lighting::Light& light) {
+void Raytracer::addLight(lighting::Light* light) {
     lights_.push_back(light);
 }
 
@@ -85,15 +85,15 @@ bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal, fl
 Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const {
     float intensity = 0;
 
-    for (lighting::Light light : lights_) {
-        if (objectInWayofLight(light, hit_point)) {
+    for (lighting::Light* light : lights_) {
+        if (objectInWayofLight(*light, hit_point)) {
             continue;
         }
 
-        Vector direction_to_light = geometry::scalarMultiply(-1, light.getDirection());
+        Vector direction_to_light = geometry::scalarMultiply(-1, light->getDirection());
         float lambertian = std::max(0.f, intersection_normal.dotProduct(direction_to_light));
 
-        intensity += light.getIntensity() * lambertian;
+        intensity += light->getIntensity() * lambertian;
     }
 
     return Vector {

@@ -16,7 +16,7 @@ class Raytracer {
     public:
         Raytracer(int width = 1200, int height = 600, int fov = 60);
         void addSphere(const geometry::Sphere& sphere);
-        void addLight(const lighting::Light& light);
+        void addLight(lighting::Light* light);
         void render();
 
     private:
@@ -25,7 +25,7 @@ class Raytracer {
         const int fov_;
         std::vector<Vector> frame_buffer_;  // represents a buffer of rgb vectors
         std::vector<geometry::Sphere> spheres_;
-        std::vector<lighting::Light> lights_;
+        std::vector<lighting::Light*> lights_;
 
         void writeToFile() const;
         Vector valueAtPixel(int pixel_x, int pixel_y) const;

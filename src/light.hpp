@@ -7,13 +7,13 @@ namespace lighting {
 
 class Light {
     public:
-        Light(const geometry::Vector& direction, float intensity);
+        Light(float intensity);
+        virtual ~Light() {};
         float getIntensity() const;
-        geometry::Vector getDirection() const;
+        virtual geometry::Vector getDirection() const = 0;
 
-    private:
+    protected:
         float intensity_;
-        geometry::Vector direction_;
 };
 
 }  // namespace lighting
