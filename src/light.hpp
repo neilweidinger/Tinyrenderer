@@ -10,7 +10,7 @@ class Light {
         Light(float intensity);
         virtual ~Light() {};
         float getIntensity() const;
-        virtual geometry::Vector getDirection() const = 0;
+        virtual geometry::Vector getDirection(const geometry::Vector& hit_point) const = 0;
 
     protected:
         float intensity_;

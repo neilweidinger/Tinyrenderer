@@ -33,7 +33,7 @@ class Raytracer {
         bool hitSphere(const Ray& camera_ray, Vector& intersection_normal, float& intersection_param) const;
         Vector calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const;
         Vector calculateLerpColor(const Ray& camera_ray) const;
-        bool objectInWayofLight(const lighting::Light& light, const Vector& hit_point) const;
+        bool objectInWayOfLight(const lighting::Light& light, const Vector& hit_point) const;
 };
 
 }  // namespace raytracer
