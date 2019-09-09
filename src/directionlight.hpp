@@ -9,7 +9,7 @@ namespace lighting {
 class DirectionLight : public Light {
     public:
         DirectionLight(const geometry::Vector& direction, float intensity);
-        geometry::Vector getDirection(const geometry::Vector& hit_point) const override;
+        geometry::Vector getDirectionToLight(const geometry::Vector& hit_point) const override;
 
     private:
         geometry::Vector direction_;

@@ -90,7 +90,7 @@ Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal, const
             continue;
         }
 
-        Vector direction_to_light = geometry::scalarMultiply(-1, light->getDirection(hit_point));
+        Vector direction_to_light = light->getDirectionToLight(hit_point);
         float lambertian = std::max(0.f, intersection_normal.dotProduct(direction_to_light));
 
         intensity += light->getIntensity() * lambertian;
@@ -117,7 +117,7 @@ Vector Raytracer::calculateLerpColor(const Ray& camera_ray) const {
 bool Raytracer::objectInWayOfLight(const lighting::Light& light, const Vector& hit_point) const {
     Vector unused_vector {};
     float unused_float = 0;
-    Vector direction_to_light = geometry::scalarMultiply(-1, light.getDirection(hit_point));
+    Vector direction_to_light = light.getDirectionToLight(hit_point);
     Ray ray_from_hit_point_to_light = Ray{hit_point, direction_to_light};
 
     if (hitSphere(ray_from_hit_point_to_light, unused_vector, unused_float)) {

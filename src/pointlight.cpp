@@ -7,8 +7,8 @@ PointLight::PointLight(const geometry::Vector& position, float intensity)
     position_ {position}
 {}
 
-geometry::Vector PointLight::getDirection(const geometry::Vector& hit_point) const {
-    return geometry::normalize(hit_point - position_);
+geometry::Vector PointLight::getDirectionToLight(const geometry::Vector& hit_point) const {
+    return geometry::normalize(position_ - hit_point);
 }
 
 }  // namespace lighting

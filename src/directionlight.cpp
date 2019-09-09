@@ -7,8 +7,8 @@ DirectionLight::DirectionLight(const geometry::Vector& direction, float intensit
     direction_ {geometry::normalize(direction)}
 {}
 
-geometry::Vector DirectionLight::getDirection(const geometry::Vector& hit_point) const {
-    return direction_;
+geometry::Vector DirectionLight::getDirectionToLight(const geometry::Vector& hit_point) const {
+    return geometry::scalarMultiply(-1, direction_);
 }
 
 }  // namespace lighting
