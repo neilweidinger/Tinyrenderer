@@ -4,7 +4,7 @@ SRCS = $(wildcard *.cpp) $(wildcard src/*.cpp)
 OBJS = $(addprefix $(BUILDDIR)/, $(SRCS:.cpp=.o))
 DEPS = $(OBJS:.o=.d)
 CXX = clang++
-CXXFLAGS = -std=c++11 -Wall -O3
+CXXFLAGS = -std=c++11 -Wall -Wfloat-equal -O3
 
 .PHONY: clean
 

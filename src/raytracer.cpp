@@ -1,5 +1,6 @@
 #include <fstream>
 #include <cmath>
+#include <limits>
 #include "raytracer.hpp"
 
 namespace raytracer {
@@ -46,12 +47,10 @@ void Raytracer::writeToFile() const {
 
 Vector Raytracer::valueAtPixel(int pixel_x, int pixel_y) const {
     Ray camera_ray = castRay(pixel_x, pixel_y);
-    Vector intersection_normal {};
-    float intersection_param = 0;
+    HitPointInfo hit_object_info;
 
-    if (hitSphere(camera_ray, intersection_normal, intersection_param)) {
-        Vector hit_point = camera_ray.pointAtParameter(intersection_param);
-        return calculateDiffuseColor(intersection_normal, hit_point);
+    if (hitSphere(camera_ray, hit_object_info, std::numeric_limits<float>::max())) {
+        return calculateDiffuseColor(hit_object_info.intersection_normal, hit_object_info.hit_point);
     }
 
     return calculateLerpColor(camera_ray);
@@ -69,17 +68,30 @@ Ray Raytracer::castRay(int pixel_x, int pixel_y) const {
     return Ray {Vector {0, 0, 0}, Vector {world_x, world_y, -1}};
 }
 
-bool Raytracer::hitSphere(const Ray& camera_ray, Vector& intersection_normal, float& intersection_param) const {
-    for (geometry::Sphere sphere : spheres_) {
-        intersection_param = sphere.findIntersection(camera_ray);
+bool Raytracer::hitSphere(const Ray& camera_ray, HitPointInfo& hit_point_info, float max_intersection_param) const {
+    HitPointInfo closest_hit_object = findClosestIntersection(camera_ray, max_intersection_param);
+    if (closest_hit_object.intersection_param == max_intersection_param) return false;  // ray didn't hit anything
 
-        if (intersection_param > 0) {
-            intersection_normal = geometry::normalize(camera_ray.pointAtParameter(intersection_param) - sphere.getCenter());
-            return true;
+    hit_point_info = closest_hit_object;
+    return true;
+}
+
+Raytracer::HitPointInfo Raytracer::findClosestIntersection(const Ray& camera_ray, float max_intersection_param) const {
+    HitPointInfo temp_hpi {max_intersection_param, Vector{0, 0, 0}, Vector{0, 0, 0}};
+
+    for (geometry::Sphere sphere : spheres_) {
+        float temp_intersection_param = sphere.findIntersection(camera_ray);
+
+        // currently we calculate hit_point and intersection_normal even if the sphere we're currently on
+        // does not end up as the closest, might be a good spot to optimize away
+        if (temp_intersection_param > 0 && temp_intersection_param < temp_hpi.intersection_param) {
+            temp_hpi.intersection_param = temp_intersection_param;
+            temp_hpi.hit_point = camera_ray.pointAtParameter(temp_hpi.intersection_param);
+            temp_hpi.intersection_normal = geometry::normalize(temp_hpi.hit_point - sphere.getCenter());
         }
     }
 
-    return false;
+    return temp_hpi;
 }
 
 Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const {
@@ -115,12 +127,11 @@ Vector Raytracer::calculateLerpColor(const Ray& camera_ray) const {
 }
 
 bool Raytracer::objectInWayOfLight(const lighting::Light& light, const Vector& hit_point) const {
-    Vector unused_vector {};
-    float unused_float = 0;
+    HitPointInfo unused_hpi;
     Vector direction_to_light = light.getDirectionToLight(hit_point);
     Ray ray_from_hit_point_to_light = Ray{hit_point, direction_to_light};
 
-    return hitSphere(ray_from_hit_point_to_light, unused_vector, unused_float);
+    return hitSphere(ray_from_hit_point_to_light, unused_hpi, std::numeric_limits<float>::max());
 }
 
 }  // namespace raytracer

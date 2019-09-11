@@ -27,10 +27,17 @@ class Raytracer {
         std::vector<geometry::Sphere> spheres_;
         std::vector<lighting::Light*> lights_;
 
+        struct HitPointInfo {
+            float intersection_param;
+            Vector hit_point;
+            Vector intersection_normal;
+        };
+
         void writeToFile() const;
         Vector valueAtPixel(int pixel_x, int pixel_y) const;
         Ray castRay(int pixel_x, int pixel_y) const;
-        bool hitSphere(const Ray& camera_ray, Vector& intersection_normal, float& intersection_param) const;
+        bool hitSphere(const Ray& camera_ray, HitPointInfo& hit_point_info, float max_intersection_param) const;
+        HitPointInfo findClosestIntersection(const Ray& camera_ray, float max_intersection_param) const;
         Vector calculateDiffuseColor(const Vector& intersection_normal, const Vector& hit_point) const;
         Vector calculateLerpColor(const Ray& camera_ray) const;
         bool objectInWayOfLight(const lighting::Light& light, const Vector& hit_point) const;
