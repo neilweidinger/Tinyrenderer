@@ -93,7 +93,7 @@ Vector Raytracer::calculateDiffuseColor(const Vector& intersection_normal, const
         Vector direction_to_light = light->getDirectionToLight(hit_point);
         float lambertian = std::max(0.f, intersection_normal.dotProduct(direction_to_light));
 
-        intensity += light->getIntensity() * lambertian;
+        intensity += (light->getIntensity() * lambertian) / light->getFalloff(hit_point);
     }
 
     return Vector {

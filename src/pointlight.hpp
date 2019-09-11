@@ -9,6 +9,7 @@ namespace lighting {
 class PointLight : public Light {
     public:
         PointLight(const geometry::Vector& position, float intensity);
+        float getFalloff(const geometry::Vector& hit_point) const override;
         geometry::Vector getDirectionToLight(const geometry::Vector& hit_point) const override;
 
     private:
