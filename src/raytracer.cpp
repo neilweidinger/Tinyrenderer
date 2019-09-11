@@ -120,11 +120,7 @@ bool Raytracer::objectInWayOfLight(const lighting::Light& light, const Vector& h
     Vector direction_to_light = light.getDirectionToLight(hit_point);
     Ray ray_from_hit_point_to_light = Ray{hit_point, direction_to_light};
 
-    if (hitSphere(ray_from_hit_point_to_light, unused_vector, unused_float)) {
-        return true;
-    }
-
-    return false;
+    return hitSphere(ray_from_hit_point_to_light, unused_vector, unused_float);
 }
 
 }  // namespace raytracer

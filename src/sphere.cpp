@@ -5,7 +5,8 @@ namespace geometry {
 
 Sphere::Sphere(Vector center, int radius)
   : center_ {center},
-    radius_ {radius} {}
+    radius_ {radius}
+{}
 
 // returns t where t represents distance along direction vector from ray origin
 // returns -1.0 if there is no t (ray doesn't hit sphere, negative value so equivalent to ray intersecting behind camera)
