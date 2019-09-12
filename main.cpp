@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     // idk how to pass in lights as temporaries, need to find a fix
     lighting::DirectionLight dl {geometry::Vector{-1, -1, -1}, 1.5};
     rt.addLight(&dl);
-    lighting::PointLight pl {geometry::Vector{0, 0, -10}, 6.5};
+    lighting::PointLight pl {geometry::Vector{-5, 0, -10}, 8.5};
     rt.addLight(&pl);
 
     rt.render();

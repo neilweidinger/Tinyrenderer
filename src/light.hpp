@@ -12,6 +12,7 @@ class Light {
         float getIntensity() const;
         virtual float getFalloff(const geometry::Vector& hit_point) const = 0;
         virtual geometry::Vector getDirectionToLight(const geometry::Vector& hit_point) const = 0;
+        virtual float getDistanceToLight(const geometry::Vector& hit_point) const = 0;
 
     protected:
         float intensity_;

@@ -77,7 +77,7 @@ bool Raytracer::hitSphere(const Ray& camera_ray, HitPointInfo& hit_point_info, f
 }
 
 Raytracer::HitPointInfo Raytracer::findClosestIntersection(const Ray& camera_ray, float max_intersection_param) const {
-    HitPointInfo temp_hpi {max_intersection_param, Vector{0, 0, 0}, Vector{0, 0, 0}};
+    HitPointInfo temp_hpi {max_intersection_param};
 
     for (geometry::Sphere sphere : spheres_) {
         float temp_intersection_param = sphere.findIntersection(camera_ray);
@@ -129,9 +129,10 @@ Vector Raytracer::calculateLerpColor(const Ray& camera_ray) const {
 bool Raytracer::objectInWayOfLight(const lighting::Light& light, const Vector& hit_point) const {
     HitPointInfo unused_hpi;
     Vector direction_to_light = light.getDirectionToLight(hit_point);
+    float distance_to_light = light.getDistanceToLight(hit_point);
     Ray ray_from_hit_point_to_light = Ray{hit_point, direction_to_light};
 
-    return hitSphere(ray_from_hit_point_to_light, unused_hpi, std::numeric_limits<float>::max());
+    return hitSphere(ray_from_hit_point_to_light, unused_hpi, distance_to_light);
 }
 
 }  // namespace raytracer

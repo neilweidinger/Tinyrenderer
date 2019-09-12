@@ -18,4 +18,8 @@ geometry::Vector PointLight::getDirectionToLight(const geometry::Vector& hit_poi
     return geometry::normalize(position_ - hit_point);
 }
 
+float PointLight::getDistanceToLight(const geometry::Vector& hit_point) const {
+    return geometry::length(position_ - hit_point);
+}
+
 }  // namespace lighting

@@ -11,6 +11,7 @@ class PointLight : public Light {
         PointLight(const geometry::Vector& position, float intensity);
         float getFalloff(const geometry::Vector& hit_point) const override;
         geometry::Vector getDirectionToLight(const geometry::Vector& hit_point) const override;
+        float getDistanceToLight(const geometry::Vector& hit_point) const override;
 
     private:
         geometry::Vector position_;

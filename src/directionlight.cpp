@@ -1,3 +1,4 @@
+#include <limits>
 #include "directionlight.hpp"
 
 namespace lighting {
@@ -14,6 +15,10 @@ float DirectionLight::getFalloff(const geometry::Vector& hit_point) const {
 
 geometry::Vector DirectionLight::getDirectionToLight(const geometry::Vector& hit_point) const {
     return geometry::scalarMultiply(-1, direction_);
+}
+
+float DirectionLight::getDistanceToLight(const geometry::Vector& hit_point) const {
+    return std::numeric_limits<float>::max();
 }
 
 }  // namespace lighting
